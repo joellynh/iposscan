@@ -1,0 +1,28 @@
+Package: iposscan
+Type: Package
+Title: Scan through IP applications through the Intellectual Property Office of Singapore (IPOS) API
+Version: 0.1.0
+Author: Joellyn Heng <joellynheng@gmail.com>
+Maintainer: Joellyn Heng <joellynheng@gmail.com>
+Description: The iposscan package contains functions that accesses the scans the IPOS API and automates common tasks and analyses done on IP (particularly patents) data. 
+        The first few functions retrieve IP (especially patent) data by application lodgement date(s) and parses it into dataframes that are raw and cleaned.
+        The last few functions provides users with a quick scan through the patent applications between two lodgement dates, and provides an insight into similar patents (by invention title) and a data visualization of where applicants and inventors of the patents are from in the world.
+License: MIT + file LICENSE
+Encoding: UTF-8
+LazyData: true
+Imports: 
+  httr,
+  rvest,
+  plyr,
+  dplyr,
+  stringr,
+  tidyr,
+  jsonlite,
+  ggplot2,
+  maps,
+  viridis
+RoxygenNote: 7.0.2.9000
+Suggests: 
+    knitr,
+    rmarkdown
+VignetteBuilder: knitr
