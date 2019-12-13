@@ -20,6 +20,10 @@
 
 vizbygeog <- function(startdate, enddate = Sys.Date(), role = "inventor", option = "viz"){
 
+  script <- getURL("https://raw.githubusercontent.com/joellynh/iposscan/master/R/dftwodates.R", ssl.verifypeer = FALSE)
+
+  eval(parse(text = script))
+
   if (!str_detect(startdate, "\\d{4}+\\-\\d{2}+\\-\\d{2}+") | !str_detect(enddate, "\\d{4}+\\-\\d{2}+\\-\\d{2}+") | role %in% c("inventor", "applicant") == FALSE | option %in% c("viz", "count", "applications") == FALSE) {
     stop("Your inputs are invalid. Please check that they are in a suitable format.")
 

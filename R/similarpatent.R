@@ -17,6 +17,10 @@
 
 similarpatent <- function(startdate, enddate = Sys.Date(), phrase) {
 
+  script <- getURL("https://raw.githubusercontent.com/joellynh/iposscan/master/R/dftwodates.R", ssl.verifypeer = FALSE)
+
+  eval(parse(text = script))
+
   if (!str_detect(startdate, "\\d{4}+\\-\\d{2}+\\-\\d{2}+") | !str_detect(enddate, "\\d{4}+\\-\\d{2}+\\-\\d{2}+") | !is.character(phrase)) {
     stop("Your inputs are invalid. Please check that they are in a suitable format.")
 

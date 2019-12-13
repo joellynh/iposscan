@@ -13,10 +13,15 @@
 #' @import dplyr
 #' @import stringr
 #' @import tidyr
+#' @import RCurl
 #'
 #' @export
 
 dftwodates <- function(startdate, enddate = Sys.Date()) {
+
+  script <- getURL("https://raw.githubusercontent.com/joellynh/iposscan/master/R/dfbydate.R", ssl.verifypeer = FALSE)
+
+  eval(parse(text = script))
 
   if (!str_detect(startdate, "\\d{4}+\\-\\d{2}+\\-\\d{2}+") | !str_detect(enddate, "\\d{4}+\\-\\d{2}+\\-\\d{2}+")) {
     stop("Your inputs are invalid. Please check that they are in a suitable format.")
