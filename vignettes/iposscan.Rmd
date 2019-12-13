@@ -1,5 +1,5 @@
 ---
-title: "iposscan_vignette"
+title: "iposscan"
 output: rmarkdown::html_vignette
 vignette: >
   %\VignetteIndexEntry{iposscan_vignette}
@@ -79,9 +79,9 @@ The next two functions `dfbydate()` and `dftwodates()` similarly retrieves infor
 
 The difference between the two functions `dfbydate()` and `dftwodates()` is that the former retrieves patent applications lodged on one particular date (similar to what the API request allows), whereas the latter cumulatively gathers all patent applications lodged during a time interval set by two dates. `dfbydate()` will also inform if there are no applications lodged on that date.
 
-Examples of how the two functions can be used are as such:
+Examples of how the two functions can be used are as such (results from `dfbydate()` would be a subset of that of`dftwodates()`, therefore not shown):
 
-```{r dfbydate example}
+```{r dfbydate example, results="hide"}
 
 results2 <- dfbydate(date = "2018-08-23")
 head(results2, 2)
@@ -105,7 +105,7 @@ The `vizbygeog()` function allows the user to set a time interval for patent app
 
 Here's an example of the data visualization output:
 
-```{r vizbygeog example1, fig.align='center', fig.width=5}
+```{r vizbygeog example1, fig.align='center', fig.width=6}
 
 vizbygeog(startdate = "2018-08-23", enddate = "2018-08-26", role = "applicant", option = "viz")
 
