@@ -12,6 +12,7 @@
 #' @import dplyr
 #' @import stringr
 #' @import tidyr
+#' @import RCurl
 #'
 #' @export
 

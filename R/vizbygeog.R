@@ -16,6 +16,8 @@
 #' @import ggplot2
 #' @import maps
 #' @import viridis
+#' @import RCurl
+#'
 #' @export
 
 vizbygeog <- function(startdate, enddate = Sys.Date(), role = "inventor", option = "viz"){
