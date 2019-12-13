@@ -14,15 +14,20 @@ knitr::opts_chunk$set(
 )
 ```
 
-```{r setup}
+```{r setup, include=FALSE}
 
-install.packages("devtools")
-devtools::install_github("username/packagename")
-
+if (!require("devtools")){
+  install.packages("devtools")
+}
+devtools::install_github("joellynh/iposscan")
 library(iposscan)
-vizbygeog("2018-08-23", "2018-08-26")
+
 ```
 
+
+# Introduction
+
+----
 
 The iposscan package contains functions that allows users to easily obtain data from the API client of the Intellectual Property Office of Singapore (IPOS). The API includes real-time applications of designs, trademarks and patents submitted to IPOS from August 22, 2018.
 
@@ -30,8 +35,41 @@ Intellectual property (“IP”) data is often analysed by companies and goverme
 
 The API client allows for querying by one lodgement_date, and returns the set of applications lodged in that particular date. The functions in this package automate some tasks that are common use cases in IP data analyses. Functions in the package include:
 
+```{r API request}
+
+library(httr)
+
+endpoint <- "https://api.data.gov.sg/v1/technology/ipos/patents"
+params <- list("lodgement_date" = "2018-08-23")
+results_patents <- GET(endpoint, query=params)
+class(content(results_patents))
+
+```
+
 getbydate()
 dfbydate()
 dftwodates()
 similarpatent()
 vizbygeog()
+
+```{r}
+test<-getbydate("2018-08-23")
+head(test)
+```
+
+```{r}
+
+dfbydate("2018-08-23")
+
+```
+
+```{r}
+
+dftwodates("2018-08-23", "2018-08-26")
+
+```
+
+```{r}
+
+```
+

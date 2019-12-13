@@ -25,8 +25,6 @@ similarpatent <- function(startdate, enddate = Sys.Date(), phrase) {
 
   } else {
 
-    source("R/dftwodates.R")
-
     temp <- dftwodates(startdate, enddate)
     df_similar <- temp[str_detect(temp$summary.titleOfInvention, paste0("(?i)", phrase, "(?-i)")) == TRUE,]
 

@@ -26,8 +26,6 @@ dftwodates <- function(startdate, enddate = Sys.Date()) {
 
   } else {
 
-    source("R/dfbydate.R")
-
     #variables to include
 
     vars_summary <- c("summary.applicationNum","summary.applicationStatus", "summary.applicationType","summary.filingDate","summary.lodgementDate", "summary.titleOfInvention")
