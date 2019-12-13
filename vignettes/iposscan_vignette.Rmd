@@ -29,17 +29,23 @@ library(iposscan)
 
 ----
 
-The iposscan package contains functions that allows users to easily obtain data from the API client of the Intellectual Property Office of Singapore (IPOS). The API includes real-time applications of designs, trademarks and patents submitted to IPOS from August 22, 2018.
+The iposscan package wraps around the Intellectual Property Office of Singapore (IPOS) API, and contains functions that allow users to easily obtain and analyze data on real-time applications of designs, trademarks and patents submitted to IPOS from August 22, 2018 till today's date. More information on the API can be found here: https://data.gov.sg/dataset/ipos-apis?resource_id=6a030bf2-22da-4621-8ab0-9a5956a30ef3.
 
 Intellectual property (“IP”) data is often analysed by companies and goverments; the former has vested interests to know how to manage their IP based on trends in the industry, and the latter may require such information for IP policies and regulation, as well as insights into potential innovation growth areas for the economy.
 
-The API client allows for querying by one lodgement_date, and returns the set of applications lodged in that particular date. The functions in this package automate some tasks that are common use cases in IP data analyses. Functions in the package include:
+The API client allows for querying by one lodgement_date, and returns the set of applications lodged in that particular date. The functions in this package automate some tasks that are common use cases in IP data analyses. Functions in the package are:
 
-getbydate()
-dfbydate()
-dftwodates()
-similarpatent()
-vizbygeog()
+1. `getbydate()`
+2. `dfbydate()`
+3. `dftwodates()`
+4. `similarpatent()`
+5. `vizbygeog()`
+
+# On the API Client
+
+-----
+
+The Intellectual Property Office of Singapore (IPOS) API contains real-time data of design, trademark and patent applications lodged from August 22, 2018 till today's date. There is an API endpoint link for each type of intellectual property (e.g. "https://api.data.gov.sg/v1/technology/ipos/patents" for patents), and the `GET` request has only one parameter that is `lodgement_date`. The output for each is the applications lodged on that particular date, and is in a JSON format.
 
 ```{r API request}
 
@@ -48,28 +54,76 @@ library(httr)
 endpoint <- "https://api.data.gov.sg/v1/technology/ipos/patents"
 params <- list("lodgement_date" = "2018-08-23")
 results_patents <- GET(endpoint, query=params)
-class(content(results_patents))
+content_get <- content(results_patents)
+
 
 ```
 
-```{r}
-test<-getbydate("2018-08-23")
-head(test)
+# Retrieving data from API with a dataframe output
+
+-----
+
+These first set of functions in the package aims to retrieve data and parse into an easily understandable and usable 
+
+The first function in the package `getbydate()` parses the JSON output into a dataframe. Using the `jsonlite` package and the `fromJSON()` function, it creates a nested dataframe (example below). The full dataframe can be viewed when `View()` is used on the output. User is able to choose lodgement data and the type of IP for the dataframe.
+
+
+```{r getbydate example}
+
+results1 <- getbydate(date = "2018-08-23", type = "trademarks")
+head(results1, 2)
+
 ```
 
-```{r}
+The next two functions `dfbydate()` and `dftwodates()` similarly retrieves information. However, these two functions pertain only to patents, as they are the most analyzed form of IP. Instead of using the `jsonlite` package, these functions cleans up the list of lists and chooses select variables as key information needed for most types of patent analyses (e.g. application number, title of invention, applicant, applicant country, inventor, inventor country).
 
-dfbydate("2018-08-23")
+The difference between the two functions `dfbydate()` and `dftwodates()` is that the former retrieves patent applications lodged on one particular date (similar to what the API request allows), whereas the latter cumulatively gathers all patent applications lodged during a time interval set by two dates. `dfbydate()` will also inform if there are no applications lodged on that date.
+
+Examples of how the two functions can be used are as such:
+
+```{r dfbydate example}
+
+results2 <- dfbydate(date = "2018-08-23")
+head(results2, 2)
 
 ```
 
-```{r}
+```{r dftwodates example}
 
-dftwodates("2018-08-23", "2018-08-26")
+results3 <- dftwodates(startdate = "2018-08-23", enddate = "2018-08-28")
+head(results3, 2)
 
 ```
 
-```{r}
+# Use of data retrieved for search and visualization
+
+-----
+
+Some tasks that companies, governments and researchers perform on patents data are to have an overview of which countries the applicants or inventors of those patents are from, and to conduct a search on whether there are similar patents already lodged in Singapore. The next set of functions `vizbygeog()` and `similarpatent()`  automate these aforementioned tasks.
+
+The `vizbygeog()` function allows the user to set a time interval for patent applications of interest and to choose between patent applicant (which could either be a company or person) or patent inventor. The user can also choose between three types of outputs - a data visualization, a dataframe of count by country, or a dataframe of those individual applications. If through the visualization, the user is interested to know more, the dataframes will provide more information.
+
+Here's an example of the data visualization output:
+
+```{r vizbygeog example1, fig.align='center', fig.width=5}
+
+vizbygeog(startdate = "2018-08-23", enddate = "2018-08-26", role = "applicant", option = "viz")
+
+```
+
+```{r vizbygeog example2}
+
+vizbygeog(startdate = "2018-08-23", enddate = "2018-08-26", role = "applicant", option = "count")
+
+```
+
+The `similarpatent()` function, on the other hand, is like a search engine or Ctrl-F that a user can use on the patent applications lodged between two dates. The user can type a phrase, and all applications with titles of invention that contain that phrase will be gathered into a data frame.
+
+Here's an example of a set of search results:
+
+```{r similarpatent example}
+
+similarpatent("2018-08-23", "2018-08-26", "semiconductor")
 
 ```
 

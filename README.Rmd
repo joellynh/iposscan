@@ -18,43 +18,53 @@ knitr::opts_chunk$set(
 <!-- badges: start -->
 <!-- badges: end -->
 
-The goal of iposscan is to ...
+The goal of iposscan is to wrap around the Intellectual Property Office of Singapore (IPOS) API, and allow users to easily obtain and analyze data on real-time applications of designs, trademarks and patents submitted to IPOS from August 22, 2018 till today's date. More information on the API can be found here: https://data.gov.sg/dataset/ipos-apis?resource_id=6a030bf2-22da-4621-8ab0-9a5956a30ef3.
+
+Intellectual property (“IP”) data is often analysed by companies and goverments; the former has vested interests to know how to manage their IP based on trends in the industry, and the latter may require such information for IP policies and regulation, as well as insights into potential innovation growth areas for the economy.
+
+The API client allows for querying by one lodgement_date, and returns the set of applications lodged in that particular date. The functions in this package automate some tasks that are common use cases in IP data analyses. Functions in the package are:
+
+1. `getbydate()`
+2. `dfbydate()`
+3. `dftwodates()`
+4. `similarpatent()`
+5. `vizbygeog()`
 
 ## Installation
 
-You can install the released version of iposscan from [CRAN](https://CRAN.R-project.org) with:
-
-``` r
-install.packages("iposscan")
-```
-
-And the development version from [GitHub](https://github.com/) with:
+You can install the development version from [GitHub](https://github.com/joellynh/iposscan) with:
 
 ``` r
 # install.packages("devtools")
-devtools::install_github("QMSS-G5072-2019/Heng_Joellyn")
+devtools::install_github("joellynh/iposscan")
 ```
+
+```{r setup, include=FALSE}
+
+if (!require("devtools")){
+  install.packages("devtools")
+}
+devtools::install_github("joellynh/iposscan")
+library(iposscan)
+
+```
+
 ## Example
 
-This is a basic example which shows you how to solve a common problem:
+The following are some examples of 2 out of the 5 functions in the package.
 
-```{r example}
-library(iposscan)
-## basic example code
+`dftwodates()` function
+```{r example1}
+
+results3 <- dftwodates(startdate = "2018-08-23", enddate = "2018-08-28")
+head(results3, 2)
+
 ```
 
-What is special about using `README.Rmd` instead of just `README.md`? You can include R chunks like so:
+`vizbygeog()` function
+```{r vizbygeog example1, fig.align='center'}
 
-```{r cars}
-summary(cars)
+vizbygeog(startdate = "2018-08-23", enddate = "2018-08-26", role = "applicant", option = "viz")
+
 ```
 
-You'll still need to render `README.Rmd` regularly, to keep `README.md` up-to-date.
-
-You can also embed plots, for example:
-
-```{r pressure, echo = FALSE}
-plot(pressure)
-```
-
-In that case, don't forget to commit and push the resulting figure files, so they display on GitHub!
