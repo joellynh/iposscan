@@ -35,6 +35,12 @@ Intellectual property (“IP”) data is often analysed by companies and goverme
 
 The API client allows for querying by one lodgement_date, and returns the set of applications lodged in that particular date. The functions in this package automate some tasks that are common use cases in IP data analyses. Functions in the package include:
 
+getbydate()
+dfbydate()
+dftwodates()
+similarpatent()
+vizbygeog()
+
 ```{r API request}
 
 library(httr)
@@ -45,12 +51,6 @@ results_patents <- GET(endpoint, query=params)
 class(content(results_patents))
 
 ```
-
-getbydate()
-dfbydate()
-dftwodates()
-similarpatent()
-vizbygeog()
 
 ```{r}
 test<-getbydate("2018-08-23")

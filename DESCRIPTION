@@ -20,7 +20,8 @@ Imports:
   jsonlite,
   ggplot2,
   maps,
-  viridis
+  viridis,
+  RCurl
 RoxygenNote: 7.0.2.9000
 Suggests: 
     knitr,
